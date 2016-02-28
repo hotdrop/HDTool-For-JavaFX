@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jp.ojt.sst.file.ConfigFile;
+import jp.ojt.sst.file.StackTraceLog;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -92,7 +93,9 @@ public class Main extends JFrame {
 		JButton btnExecute = new JButton("EXECUTE");
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO analyze stack trace file;
+				ConfigFile confFile = ConfigFile.getInstance();
+				StackTraceLog stlog = new StackTraceLog(textField.getText(), confFile.getSearchWord());
+				stlog.read();
 			}
 		});
 		panelButton.add(btnExecute);
