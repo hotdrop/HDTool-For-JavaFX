@@ -16,6 +16,9 @@ public class StackTraceLog {
 	/** regex of date(log4j %d) */
 	private static final String LEGEX_DATE = "(\\d{4}-\\d{2}-\\d{2})";
 	
+	/** regex of Exception(contain package) */
+	private static final String LEGEX_EXCEPTION="(\\s[\\w\\.]*Exception)";
+	
 	/** target StackTraceLog absolute path */
 	private String filePath;
 	/** search word into stackTraceLog */
@@ -31,40 +34,50 @@ public class StackTraceLog {
 	public void read() {
 		
 		Pattern datePtn = Pattern.compile(LEGEX_DATE);
+		Pattern exceptionPtn = Pattern.compile(LEGEX_EXCEPTION);
+		
 		String matchDateStr = "";
 		String exceptionStr = "";
+		boolean dateMatch = false;
+		boolean exceptionMatch = false;
+		
 		boolean findWord = false;
 		StackTraceData stData = null;
 		
 		try(BufferedReader br = Files.newBufferedReader(Paths.get(filePath))) {
 			for(String line; (line = br.readLine()) != null; ) {
-				Matcher m = datePtn.matcher(line);
-				if(m.matches()) {
-					matchDateStr = m.group();
+				
+				Matcher dateMacher = datePtn.matcher(line);
+				if(dateMacher.matches()) {
+					matchDateStr = dateMacher.group();
+					dateMatch = true;
 					findWord = false;
 					stData = null;
 				}
+				
+				Matcher exceptionMacher = exceptionPtn.matcher(line);
+				if(exceptionMacher.matches()) {
+					exceptionStr = exceptionMacher.group();
+					exceptionMatch = true;
+				}
+				
+				if(dateMatch && exceptionMatch) {
+					int idx = line.indexOf(exceptionStr) + exceptionStr.length();
+					String messages = "";
+					if (line.length() > idx + 1) {
+						messages = line.substring(idx + 1);
+					}
+					stData = new StackTraceData(matchDateStr, exceptionStr, messages);
+					dateMatch = false;
+					exceptionMatch = false;
+				}
+				
 				if(!findWord) {
-					if(stData == null) {
-						// TODO extract exceptionStr from line
-						if(!exceptionStr.equals("")) {
-							// TODO extract error messages from line
-							String messages = "";
-							// TODO same stackTraceData
-							if(map.containsKey(matchDateStr + exceptionStr)) {
-								stData = map.get(matchDateStr + exceptionStr);
-								stData.addCount();
-								map.replace(matchDateStr + exceptionStr, stData);
-							} else {
-								stData = new StackTraceData(matchDateStr, exceptionStr, messages);
-							}
-						}
-					} else if(line.contains(searchWord)) {
+					if(line.contains(searchWord)) {
 						stData.setFindLine(line);
-						// TODO Insufficient that it only this key..
-						map.put(matchDateStr + exceptionStr, stData);
+						// TODO create hash key matchDateStr+exceptionStr+messages+line?
+						map.put(matchDateStr, stData);
 						findWord = true;
-						stData = null;
 					}
 				}
 			}
