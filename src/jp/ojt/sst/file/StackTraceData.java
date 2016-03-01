@@ -1,7 +1,5 @@
 package jp.ojt.sst.file;
 
-import java.util.Date;
-
 public class StackTraceData {
 
 	private String dateStr;
@@ -11,14 +9,11 @@ public class StackTraceData {
 	/** same exception data count */
 	private int count = 1;
 	
-	public StackTraceData(String argDateStr, String argExceptionStr, String argMessages) {
+	public StackTraceData(String argDateStr, String argExceptionStr, String argMessages, String argLine) {
 		dateStr =  argDateStr;
 		exceptionStr = argExceptionStr;
 		messages = argMessages;
-	}
-	
-	public void setFindLine(String line) {
-		findLine = line;
+		findLine = argLine;
 	}
 	
 	public void addCount() {

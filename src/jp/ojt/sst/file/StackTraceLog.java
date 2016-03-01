@@ -17,7 +17,7 @@ public class StackTraceLog {
 	private static final String LEGEX_DATE = "(\\d{4}-\\d{2}-\\d{2})";
 	
 	/** regex of Exception(contain package) */
-	private static final String LEGEX_EXCEPTION="(\\s[\\w\\.]*Exception)";
+	private static final String LEGEX_EXCEPTION="([\\w\\.]*Exception)";
 	
 	/** target StackTraceLog absolute path */
 	private String filePath;
@@ -38,46 +38,47 @@ public class StackTraceLog {
 		
 		String matchDateStr = "";
 		String exceptionStr = "";
-		boolean dateMatch = false;
-		boolean exceptionMatch = false;
+		String messages = "";
 		
-		boolean findWord = false;
-		StackTraceData stData = null;
+		boolean foundDate = false;
+		boolean foundException = false;
+		boolean foundWord = false;
 		
 		try(BufferedReader br = Files.newBufferedReader(Paths.get(filePath))) {
 			for(String line; (line = br.readLine()) != null; ) {
 				
 				Matcher dateMacher = datePtn.matcher(line);
-				if(dateMacher.matches()) {
+				if(dateMacher.find()) {
 					matchDateStr = dateMacher.group();
-					dateMatch = true;
-					findWord = false;
-					stData = null;
+					foundDate = true;
+					foundException = false;
+					foundWord = false;
 				}
 				
-				Matcher exceptionMacher = exceptionPtn.matcher(line);
-				if(exceptionMacher.matches()) {
-					exceptionStr = exceptionMacher.group();
-					exceptionMatch = true;
-				}
-				
-				if(dateMatch && exceptionMatch) {
-					int idx = line.indexOf(exceptionStr) + exceptionStr.length();
-					String messages = "";
-					if (line.length() > idx + 1) {
-						messages = line.substring(idx + 1);
+				if(foundDate && !foundException) {
+					Matcher exceptionMacher = exceptionPtn.matcher(line);
+					if(exceptionMacher.find()) {
+						exceptionStr = exceptionMacher.group();
+						int idx = line.indexOf(exceptionStr) + exceptionStr.length();
+						if (line.length() > idx + 1) {
+							messages = line.substring(idx + 1);
+						}
+						foundException = true;
 					}
-					stData = new StackTraceData(matchDateStr, exceptionStr, messages);
-					dateMatch = false;
-					exceptionMatch = false;
 				}
 				
-				if(!findWord) {
+				if(foundException && !foundWord) {
 					if(line.contains(searchWord)) {
-						stData.setFindLine(line);
-						// TODO create hash key matchDateStr+exceptionStr+messages+line?
-						map.put(matchDateStr, stData);
-						findWord = true;
+						String key = matchDateStr + exceptionStr + messages + line;
+						if(map.containsKey(key)) {
+							StackTraceData stData = map.get(key);
+							stData.addCount();
+							map.replace(key, stData);
+						} else {
+							StackTraceData stData = new StackTraceData(matchDateStr, exceptionStr, messages, line);
+							map.put(key, stData);
+						}
+						foundWord = true;
 					}
 				}
 			}
@@ -87,6 +88,10 @@ public class StackTraceLog {
 	}
 	
 	public void outPutCSV() {
-		// output CSV
+		for(String key : map.keySet()) {
+			StackTraceData stData = map.get(key);
+			// TODO
+			System.out.println(stData.toCSVString());
+		}
 	}
 }
