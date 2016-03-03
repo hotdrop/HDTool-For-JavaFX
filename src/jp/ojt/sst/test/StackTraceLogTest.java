@@ -4,27 +4,40 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import jp.ojt.sst.file.StackTraceLog;
+import jp.ojt.sst.file.StackTraceFile;
 
+/**
+ * Class to test the StackTraceFileClass
+ *
+ */
 public class StackTraceLogTest {
 	
+	/**
+	 * Test main
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		String path = createTestLog();
 		String searchWord = "test";
 		
-		StackTraceLog stl = new StackTraceLog(path, searchWord);
+		StackTraceFile stl = new StackTraceFile(path, searchWord);
 		stl.read();
-		stl.outPutCSV();
-		
-		// TODO delete TestLog
+		stl.outputCSV();
+
+		try {
+			Files.delete(Paths.get(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	/**
+	 * Create a test log file for the test and return its path. 
+	 * @return absolute path of the create file.
+	 */
 	private static String createTestLog() {
 		
 		String path = System.getProperty("java.class.path") + "/test.log";

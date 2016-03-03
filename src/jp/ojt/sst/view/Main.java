@@ -9,9 +9,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jp.ojt.sst.file.ConfigFile;
-import jp.ojt.sst.file.StackTraceLog;
+import jp.ojt.sst.file.StackTraceFile;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import java.awt.FlowLayout;
@@ -20,6 +21,10 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Main Frame of this tool.
+ * 
+ */
 public class Main extends JFrame {
 
 	/** serial version UID */
@@ -94,8 +99,10 @@ public class Main extends JFrame {
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigFile confFile = ConfigFile.getInstance();
-				StackTraceLog stlog = new StackTraceLog(textField.getText(), confFile.getSearchWord());
-				stlog.read();
+				StackTraceFile stFile = new StackTraceFile(textField.getText(), confFile.getSearchWord());
+				stFile.read();
+				stFile.outputCSV();
+				JOptionPane.showMessageDialog(null, "Success!! output csv file.");
 			}
 		});
 		panelButton.add(btnExecute);

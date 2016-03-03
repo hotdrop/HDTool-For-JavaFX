@@ -9,28 +9,44 @@ import java.util.regex.Pattern;
 import jp.ojt.sst.util.ASTException;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
-public class StackTraceLog {
+/**
+ * StackTraceFile
+ *
+ */
+public class StackTraceFile {
 
-	/** regex of date(log4j %d) */
+	/** Regex of date(log4j %d) */
 	private static final String LEGEX_DATE = "(\\d{4}-\\d{2}-\\d{2})";
 	
-	/** regex of Exception(contain package) */
+	/** Regex of Exception(contain package) */
 	private static final String LEGEX_EXCEPTION="([\\w\\.]*Exception)";
 	
-	/** target StackTraceLog absolute path */
+	/** Target StackTraceLog absolute path */
 	private String filePath;
-	/** search word into stackTraceLog */
+	
+	/** Search word into stackTraceLog */
 	private String searchWord;
 	
+	/** Store StackTraceData.(date, Exception, detail, searchWord line) */
 	private HashMap<String, StackTraceData> map = new HashMap<>();
 	
-	public StackTraceLog(String path, String word) {
+	/**
+	 * Constructor
+	 * 
+	 * @param path stackTraceLogFile absolute path
+	 * @param word search word
+	 */
+	public StackTraceFile(String path, String word) {
 		filePath = path;
 		searchWord = word;
 	}
 	
+	/**
+	 * Read from Stack Trace File
+	 */
 	public void read() {
 		
 		Pattern datePtn = Pattern.compile(LEGEX_DATE);
@@ -87,11 +103,21 @@ public class StackTraceLog {
 		}
 	}
 	
-	public void outPutCSV() {
-		for(String key : map.keySet()) {
-			StackTraceData stData = map.get(key);
-			// TODO
-			System.out.println(stData.toCSVString());
+	/**
+	 * It outputs the acquired stackTraceDatas in CSV format.
+	 * The output file name is [output.csv].
+	 * If the same file name exists, it overwrites the old file.
+	 */
+	public void outputCSV() {
+		String path = System.getProperty("java.class.path") + "/output.csv";
+		try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(path))) {
+			for(String key : map.keySet()) {
+				StackTraceData stData = map.get(key);
+				bw.write(stData.toCSVString());
+				bw.newLine();
+			}
+		} catch (IOException ioe) {
+			throw new ASTException(ioe);
 		}
 	}
 }
