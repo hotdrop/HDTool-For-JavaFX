@@ -13,8 +13,8 @@ public class StackTraceData {
 	/** A string representation of this exception */
 	private String exceptionStr;
 	
-	/** Messages */
-	private String messages;
+	/** Message */
+	private String message;
 	
 	/** The first line was found in the search word */
 	private String findLine;
@@ -27,13 +27,13 @@ public class StackTraceData {
 	 * 
 	 * @param argDateStr
 	 * @param argExceptionStr
-	 * @param argMessages
+	 * @param argMessage
 	 * @param argLine
 	 */
-	public StackTraceData(String argDateStr, String argExceptionStr, String argMessages, String argLine) {
+	public StackTraceData(String argDateStr, String argExceptionStr, String argMessage, String argLine) {
 		dateStr =  argDateStr;
 		exceptionStr = argExceptionStr;
-		messages = argMessages;
+		message = argMessage;
 		findLine = argLine;
 	}
 	
@@ -43,6 +43,26 @@ public class StackTraceData {
 	public void addCount() {
 		count++;
 	}
+	
+	public String getDateStr() {
+		return dateStr;
+	}
+	
+	public String getExceptionStr() {
+		return exceptionStr;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+	
+	public String getFindLine() {
+		return findLine;
+	}
+	
+	public int getCount() {
+		return count;
+	}
 
 	/**
 	 * Returns a csv string representation of this stackTraceData.
@@ -51,7 +71,7 @@ public class StackTraceData {
 	 * @return a csv string representation of this stackTraceData
 	 */
 	public String toCSVString() {
-		String[] arr = {dateStr, exceptionStr, messages, findLine, String.valueOf(count)};
+		String[] arr = {dateStr, exceptionStr, message, findLine, String.valueOf(count)};
 		return String.join(",", arr); 
 	}
 }

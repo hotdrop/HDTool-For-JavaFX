@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.HashMap;
 import java.util.stream.Stream;
 
+import jp.ojt.sst.file.StackTraceData;
 import jp.ojt.sst.file.StackTraceFile;
 
 /**
@@ -25,7 +27,10 @@ public class StackTraceLogTest {
 		
 		StackTraceFile stl = new StackTraceFile(path, searchWord);
 		stl.read();
-		stl.outputCSV();
+		HashMap<String, StackTraceData> map = stl.getResultMap();
+		for(StackTraceData std : map.values()) {
+			System.out.println(std.toCSVString());
+		}
 
 		try {
 			Files.delete(Paths.get(path));
@@ -40,7 +45,7 @@ public class StackTraceLogTest {
 	 */
 	private static String createTestLog() {
 		
-		String path = System.getProperty("java.class.path") + "/test.log";
+		String path = System.getProperty("user.dir") + "/test.log";
 		Stream<String> stream = Stream.of(
 				"2016-02-17 19:05:34.878,[WebContainer : 0  ],java.lang.NumberFormatException: null",
 				"	at java.lang.Integer.parseInt(Integer.java:465)",

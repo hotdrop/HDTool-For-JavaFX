@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 import jp.ojt.sst.util.ASTException;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
@@ -104,20 +103,10 @@ public class StackTraceFile {
 	}
 	
 	/**
-	 * It outputs the acquired stackTraceDatas in CSV format.
-	 * The output file name is [output.csv].
-	 * If the same file name exists, it overwrites the old file.
+	 * 
+	 * @return summary stackTraceLogFile Map
 	 */
-	public void outputCSV() {
-		String path = System.getProperty("java.class.path") + "/output.csv";
-		try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(path))) {
-			for(String key : map.keySet()) {
-				StackTraceData stData = map.get(key);
-				bw.write(stData.toCSVString());
-				bw.newLine();
-			}
-		} catch (IOException ioe) {
-			throw new ASTException(ioe);
-		}
+	public HashMap<String, StackTraceData> getResultMap() {
+		return map;
 	}
 }
