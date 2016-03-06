@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jp.ojt.sst.util.ASTException;
+import jp.ojt.sst.exception.ASTException;
+import jp.ojt.sst.model.StackTraceData;
 
 import java.io.BufferedReader;
 import java.io.IOException;

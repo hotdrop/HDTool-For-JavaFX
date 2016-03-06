@@ -1,7 +1,7 @@
 /**
  * 
  */
-package jp.ojt.sst.util;
+package jp.ojt.sst.exception;
 
 /**
  * Analyze StackTrace Exception

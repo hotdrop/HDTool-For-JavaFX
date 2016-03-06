@@ -7,14 +7,14 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.stream.Stream;
 
-import jp.ojt.sst.file.StackTraceData;
 import jp.ojt.sst.file.StackTraceFile;
+import jp.ojt.sst.model.StackTraceData;
 
 /**
  * Class to test the StackTraceFileClass
  *
  */
-public class StackTraceLogTest {
+public class StackTraceFileTest {
 	
 	/**
 	 * Test main
@@ -22,7 +22,7 @@ public class StackTraceLogTest {
 	 */
 	public static void main(String[] args) {
 		
-		String path = createTestLog();
+		String path = createTestLogFile();
 		String searchWord = "test";
 		
 		StackTraceFile stl = new StackTraceFile(path, searchWord);
@@ -43,7 +43,7 @@ public class StackTraceLogTest {
 	 * Create a test log file for the test and return its path. 
 	 * @return absolute path of the create file.
 	 */
-	private static String createTestLog() {
+	private static String createTestLogFile() {
 		
 		String path = System.getProperty("user.dir") + "/test.log";
 		Stream<String> stream = Stream.of(

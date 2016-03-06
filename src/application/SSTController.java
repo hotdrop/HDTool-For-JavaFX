@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,9 +17,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import jp.ojt.sst.file.StackTraceData;
 import jp.ojt.sst.file.StackTraceFile;
-import jp.ojt.sst.view.TableViewData;
+import jp.ojt.sst.model.StackTraceData;
 
 public class SSTController implements Initializable {
 	
@@ -33,17 +31,17 @@ public class SSTController implements Initializable {
 	private Button buttonExecute;
 	
 	@FXML
-	private TableView<TableViewData> resultTableView;
+	private TableView<StackTraceData> resultTableView;
 	@FXML
-	private TableColumn<TableViewData, String> dateViewId;
+	private TableColumn<StackTraceData, String> dateViewId;
 	@FXML
-	private TableColumn<TableViewData, Integer> numViewId;
+	private TableColumn<StackTraceData, Integer> numViewId;
 	@FXML
-	private TableColumn<TableViewData, String> exceptionViewId;
+	private TableColumn<StackTraceData, String> exceptionViewId;
 	@FXML
-	private TableColumn<TableViewData, String> messageViewId;
+	private TableColumn<StackTraceData, String> messageViewId;
 	@FXML
-	private TableColumn<TableViewData, String> locationViewId;
+	private TableColumn<StackTraceData, String> locationViewId;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -70,15 +68,12 @@ public class SSTController implements Initializable {
 	
 	@FXML
 	protected void onExecute(ActionEvent event) {
-		
 		StackTraceFile stFile = new StackTraceFile(filePathField.getText(), searchWordField.getText());
 		stFile.read();
 		HashMap<String, StackTraceData> resultMap = stFile.getResultMap();
 		resultTableView.getItems().clear();
 		for(StackTraceData stData : resultMap.values()) {
-			TableViewData tbd = new TableViewData(stData.getDateStr(), stData.getExceptionStr(),
-					stData.getMessage(),stData.getFindLine(), stData.getCount());
-			resultTableView.getItems().add(tbd);
+			resultTableView.getItems().add(stData);
 		}
 	}
 	
