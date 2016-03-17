@@ -26,13 +26,6 @@
                </font>
             </Button>
             <TableView fx:id="resultTableView" layoutX="50.0" layoutY="180.0" prefHeight="350.0" prefWidth="500.0">
-              <columns>
-                <TableColumn fx:id="dateViewId" prefWidth="100.0" text="DATE" />
-                <TableColumn fx:id="numViewId" prefWidth="60.0" text="NUM" />
-                <TableColumn fx:id="exceptionViewId" prefWidth="250.0" text="EXCEPTION" />
-                <TableColumn fx:id="messageViewId" prefWidth="380.0" text="MESSAGE" />
-                <TableColumn fx:id="locationViewId" prefWidth="400.0" text="LOCATION" />
-              </columns>
             </TableView>
          </children>
       </Pane>
