@@ -20,24 +20,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
- * StackTraceFile Class
+ * StackTraceFile
  *
  */
 public class StackTraceFile {
 
-	/** スタックトレースファイルの行情報から年月を取得するための正規表現 */
+	/** This Legex is to get a date from the line in the StackTraceFile */
 	private static final String LEGEX_MONTH = "(\\d{4}-\\d{2})";
 
-	/** スタックトレースファイルの行情報から例外クラス文字列を取得するための正規表現 */
+	/** This Legex is to get a Exception class name the line in the StackTraceFile */
 	private static final String LEGEX_EXCEPTION="([\\w\\.]*Exception)";
 
-	/** スタックトレースファイルのフルパス */
+	/** Absolute path of this file  */
 	private String filePath;
 
-	/** 検索文字列 */
+	/** Word to search for the line in the StackTraceFile */
 	private String searchWord;
 
-	/** スタックトレースファイルから読み込んだ例外情報が発生した年月を保持するリスト */
+	/** This list holds the month which the exception has occurred */
 	private List<String> monthList;
 
 	/**
@@ -53,7 +53,7 @@ public class StackTraceFile {
 
 	/**
 	 * Read from Stack Trace File.
-	 * @return
+	 * @return List of stackTraceProperty 
 	 */
 	public ObservableList<StackTraceProperty> read() {
 
@@ -97,8 +97,7 @@ public class StackTraceFile {
 				if(foundException && !foundWord) {
 					if(line.contains(searchWord)) {
 						String key = exceptionStr + messages + line;
-						if(stackTracePropMap.containsKey(key)) {
-							// 既にキーが存在する場合は月毎の発生件数を加算する
+						if(stackTracePropMap.containsKey(key)) { 
 							StackTraceProperty stData = stackTracePropMap.get(key);
 							stData.addMonth(matchDateStr);
 							stackTracePropMap.replace(key, stData);
@@ -125,10 +124,11 @@ public class StackTraceFile {
 	}
 
 	/**
-	 * スタックトレースファイルから読み込んだ、例外が発生した年月リストを取得する
-	 * @return 例外が発生した年月のリスト（年月の昇順）
+	 * 
+	 * Get the month list an exceoption occurs.
+	 * @return month list (ascending order of the month) 
 	 */
-	public List<String> getMonthKeys() {
+	public List<String> getMonthList() {
 		return monthList;
 	}
 }

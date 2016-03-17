@@ -60,7 +60,7 @@ public class SSTController implements Initializable {
 		StackTraceFile stFile = new StackTraceFile(filePathField.getText(), searchWordField.getText());
 		ObservableList<StackTraceProperty> dataList = stFile.read();
 
-		createResultTableView(stFile.getMonthKeys());
+		createResultTableView(stFile.getMonthList());
 		// add data in view
 		resultTableView.getItems().addAll(dataList);
 	}

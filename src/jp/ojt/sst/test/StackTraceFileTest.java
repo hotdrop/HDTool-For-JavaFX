@@ -31,7 +31,7 @@ public class StackTraceFileTest {
 		StackTraceFile stl = new StackTraceFile(path, searchWord);
 		ObservableList<StackTraceProperty> stdList = stl.read();
 
-		List<String> monthKeyList = stl.getMonthKeys();
+		List<String> monthKeyList = stl.getMonthList();
 
 		for(StackTraceProperty std : stdList) {
 			printCSV(std, monthKeyList);

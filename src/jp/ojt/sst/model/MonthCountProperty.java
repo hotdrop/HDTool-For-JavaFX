@@ -4,32 +4,32 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
- * 年月の例外発生数を保持するプロパティ
- *
+ * MonthCountProperty 
+ * This class is a property class that holds a number of exceptions for each month.
  */
 public class MonthCountProperty {
 
-	/** 例外発生数の内部カウント値 */
+	/** internal count to be used only in this class */
 	private int innercnt = 0;
 
 	/**
-	 * コンストラクタ
-	 * @param cnt 例外発生数の初期値
+	 * Constructor
+	 * @param cnt initial value of exception count
 	 */
 	public MonthCountProperty(int cnt) {
 		innercnt = cnt;
 	}
 
 	/**
-	 * 発生数を1加算する
+	 * 1 added
 	 */
 	public void addCount() {
 		innercnt++;
 	}
 
 	/**
-	 * 例外発生数をIntegerProperty表現で取得する
-	 * @return 例外発生数のIntegerProperty表現
+	 * Get IntegerProperty of a number of exceptions
+	 * @return IntegerProperty of a number of exceptions 
 	 */
 	public IntegerProperty countProperty() {
 		return new SimpleIntegerProperty(innercnt);

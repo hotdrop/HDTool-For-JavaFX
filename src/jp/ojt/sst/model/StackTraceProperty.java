@@ -82,10 +82,10 @@ public class StackTraceProperty {
 	}
 
 	/**
-	 * 指定された年月キー（YYYY-MM）に対応した例外発生数をプロパティ形式で取得する。
-	 * もし年月キーが存在しない（指定月に例外が発生していない）場合は0を取得する。
+	 * Get MonthCountProperty of the number of exception that corresponding to the specified month key(YYYY-MM).
+	 * If the specified month key does not exist, return the MonthCountProperty of 0.  
 	 * @param monthKey
-	 * @return 年月の例外発生数プロパティ
+	 * @return MonthCountProperty of the number of exception
 	 */
 	public MonthCountProperty monthCountProperty(String monthKey) {
 		if(monthCountMap.get().containsKey(monthKey)) {
