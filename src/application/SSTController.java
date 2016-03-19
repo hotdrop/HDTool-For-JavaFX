@@ -73,34 +73,28 @@ public class SSTController implements Initializable {
 	/**
 	 * create table view
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void createResultTableView(List<String> monthList) {
 
 		resultTableView.getColumns().clear();
 		resultTableView.getItems().clear();
 
 		// create fixed column
-		TableColumn exceptionTypeCol = new TableColumn("EXCEPTION");
+		TableColumn<StackTraceProperty, String> exceptionTypeCol = new TableColumn<>("EXCEPTION");
 		exceptionTypeCol.setCellValueFactory(new PropertyValueFactory<>("exception"));
 		resultTableView.getColumns().add(exceptionTypeCol);
 
-		TableColumn messageCol = new TableColumn("MESSAGE");
+		TableColumn<StackTraceProperty, String> messageCol = new TableColumn<>("MESSAGE");
 		messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
 		resultTableView.getColumns().add(messageCol);
 
-		TableColumn locationCol = new TableColumn("LOCATION");
+		TableColumn<StackTraceProperty, String> locationCol = new TableColumn<>("LOCATION");
 		locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
 		resultTableView.getColumns().add(locationCol);
 
 		// create variable column
 		for(String month : monthList) {
-			TableColumn monthCol = new TableColumn(month);
-			monthCol.setCellValueFactory(
-				new Callback<CellDataFeatures<StackTraceProperty, String>, ObservableValue>() {
-					public ObservableValue call(CellDataFeatures<StackTraceProperty, String> p) {
-						return p.getValue().monthCountProperty(month).countProperty();
-					}
-				});
+			TableColumn<StackTraceProperty, Number> monthCol = new TableColumn<>(month);
+			monthCol.setCellValueFactory(p -> p.getValue().monthCountProperty(month).countProperty());
 			resultTableView.getColumns().add(monthCol);
 		}
 	}
