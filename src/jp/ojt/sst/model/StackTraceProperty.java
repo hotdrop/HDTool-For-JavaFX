@@ -3,7 +3,9 @@ package jp.ojt.sst.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -24,8 +26,10 @@ public class StackTraceProperty {
 	/** The first line was found in the search word */
 	private StringProperty location;
 
-	/**  */
 	private ObjectProperty<Map<String, MonthCountProperty>> monthCountMap = new SimpleObjectProperty<>();
+	
+	/** total each monthCount */
+	private int totalMonthCount;
 
 	/**
 	 * Constructor
@@ -41,6 +45,7 @@ public class StackTraceProperty {
 		location = new SimpleStringProperty(argLine);
 		monthCountMap.set(new HashMap<String, MonthCountProperty>());
 		monthCountMap.get().put(argDateStr, new MonthCountProperty(1));
+		totalMonthCount++;
 	}
 
 	/**
@@ -55,6 +60,7 @@ public class StackTraceProperty {
 		} else {
 			monthCountMap.get().put(argMonth, new MonthCountProperty(1));
 		}
+		totalMonthCount++;
 	}
 
 	/**
@@ -93,5 +99,13 @@ public class StackTraceProperty {
 		} else {
 			return new MonthCountProperty(0);
 		}
+	}
+	
+	/**
+	 * Get totalMonthCountProperty
+	 * @return
+	 */
+	public IntegerProperty totalProperty() {
+		return new SimpleIntegerProperty(totalMonthCount);
 	}
 }

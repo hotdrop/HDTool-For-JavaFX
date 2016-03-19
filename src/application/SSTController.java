@@ -94,5 +94,10 @@ public class SSTController implements Initializable {
 			monthCol.setCellValueFactory(p -> p.getValue().monthCountProperty(month).countProperty());
 			resultTableView.getColumns().add(monthCol);
 		}
+		
+		// create fixed column
+		TableColumn<StackTraceProperty, Number> totalCol = new TableColumn<>("TOTAL");
+		totalCol.setCellValueFactory(new PropertyValueFactory<>("total"));
+		resultTableView.getColumns().add(totalCol);
 	}
 }
