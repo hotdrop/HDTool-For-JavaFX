@@ -59,7 +59,7 @@ public class SSTController implements Initializable {
 
 		createResultTableView(stFile.getMonthList());
 		// add data in view
-		resultTableView.getItems().addAll(dataList);
+		resultTableView.getItems().addAll(dataList);	
 	}
 
 	@FXML
