@@ -124,8 +124,8 @@ public class StackTraceFile {
 	}
 
 	/**
-	 * 
 	 * Get the month list an exceoption occurs.
+	 * Coution! this method must be used after read in this class.
 	 * @return month list (ascending order of the month) 
 	 */
 	public List<String> getMonthList() {

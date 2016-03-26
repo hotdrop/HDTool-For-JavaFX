@@ -29,13 +29,20 @@ public class StackTraceFileTest {
 		String searchWord = "test";
 
 		StackTraceFile stl = new StackTraceFile(path, searchWord);
+		
+		// read file
+		long start = System.currentTimeMillis();
 		ObservableList<StackTraceProperty> stdList = stl.read();
+		long end = System.currentTimeMillis();
+		System.out.println("read time(ms)=" + (end - start));
 
 		List<String> monthKeyList = stl.getMonthList();
-
-		for(StackTraceProperty std : stdList) {
-			printCSV(std, monthKeyList);
-		}
+		
+		// println
+		start = System.currentTimeMillis();
+		stdList.stream().forEach(p -> printCSV(p, monthKeyList));
+		end = System.currentTimeMillis();
+		System.out.println("print time(ms)=" + (end - start));
 
 		try {
 			Files.delete(Paths.get(path));

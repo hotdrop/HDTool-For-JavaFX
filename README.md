@@ -1,5 +1,4 @@
-## Name
-Stack Trace Summary Tool
+## Stack Trace Summary Tool
 
 ## Overview
 This tool reads the stackTrace file output by log4j, to summarize the following information
@@ -9,7 +8,7 @@ This tool reads the stackTrace file output by log4j, to summarize the following 
 4. number of exception occurrences of the each month
 
 ## Requirement
-* Java version 1.8.0 or later
+* java8(1.8.0_60)
 
 ## Usage
 ```
