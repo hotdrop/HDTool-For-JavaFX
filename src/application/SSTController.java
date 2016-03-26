@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -66,19 +63,6 @@ public class SSTController implements Initializable {
 		// add data in view
 		resultTableView.getItems().addAll(dataList);
 	}
-	
-	@FXML
-	protected void onSaveCSV(ActionEvent event) {
-		FileChooser fc = new FileChooser();
-		fc.setTitle("Save TableViewData");
-		fc.getExtensionFilters().addAll(new ExtensionFilter("CSV File", "*.csv"));
-		File saveFile = fc.showSaveDialog(null);
-		
-		if(saveFile != null) {
-			// TODO
-			//saveCSV(saveFile);
-		}
-	}
 
 	@FXML
 	protected void onExit(ActionEvent event) {
@@ -117,17 +101,5 @@ public class SSTController implements Initializable {
 		TableColumn<StackTraceProperty, Number> totalCol = new TableColumn<>("TOTAL");
 		totalCol.setCellValueFactory(new PropertyValueFactory<>("total"));
 		resultTableView.getColumns().add(totalCol);
-	}
-	
-	/**
-	 * TODOs
-	 * @param csvFile
-	 */
-	private void saveCSV(File csvFile) {
-		try {
-			FileWriter fw = new FileWriter(csvFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	}	
 }
