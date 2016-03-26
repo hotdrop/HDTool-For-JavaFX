@@ -59,10 +59,6 @@ public class SSTController implements Initializable {
 		StackTraceFile stFile = new StackTraceFile(filePathField.getText(), searchWordField.getText());
 		ObservableList<StackTraceProperty> dataList = stFile.read();
 		createResultTableView(stFile.getMonthList());
-<<<<<<< HEAD
-		// add data in view
-		resultTableView.getItems().addAll(dataList);
-=======
 		resultTableView.getItems().addAll(dataList);	
 	}
 	
@@ -78,7 +74,6 @@ public class SSTController implements Initializable {
 			ResultCSVFile csv = new ResultCSVFile();
 			csv.save(saveFile.getAbsolutePath(), stFile);
 		}
->>>>>>> develop
 	}
 
 	@FXML
@@ -118,9 +113,5 @@ public class SSTController implements Initializable {
 		TableColumn<StackTraceProperty, Number> totalCol = new TableColumn<>("TOTAL");
 		totalCol.setCellValueFactory(new PropertyValueFactory<>("total"));
 		resultTableView.getColumns().add(totalCol);
-<<<<<<< HEAD
-	}	
-=======
 	}
->>>>>>> develop
 }

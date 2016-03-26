@@ -22,8 +22,11 @@
                </font>
             </Button>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <Button layoutX="360.0" layoutY="130.0" mnemonicParsing="false" onAction="#onExit" prefHeight="30.0" prefWidth="120.0" text="Exit">
 =======
+=======
+>>>>>>> develop
             <Button fx:id="buttonSaveCSV" layoutX="260.0" layoutY="130.0" mnemonicParsing="false" onAction="#onSaveCSV" prefHeight="30.0" prefWidth="120.0" text="SaveCSV">
                <font>
                   <Font size="18.0" />
