@@ -18,13 +18,13 @@ import javafx.beans.property.StringProperty;
 public class StackTraceProperty {
 
 	/** A StringProperty representation of this exception */
-	private StringProperty expProperty;
+	private StringProperty exceptionStr;
 
 	/** A StringProperty representation of this message */
-	private StringProperty msgProperty;
+	private StringProperty message;
 
 	/** The first line was found in the search word */
-	private StringProperty locationProperty;
+	private StringProperty location;
 
 	private ObjectProperty<Map<String, MonthCountProperty>> monthCountMap = new SimpleObjectProperty<>();
 	
@@ -40,9 +40,9 @@ public class StackTraceProperty {
 	 * @param argLine
 	 */
 	public StackTraceProperty(String argDateStr, String argExceptionStr, String argMessage, String argLine) {
-		expProperty = new SimpleStringProperty(argExceptionStr);
-		msgProperty = new SimpleStringProperty(argMessage);
-		locationProperty = new SimpleStringProperty(argLine);
+		exceptionStr = new SimpleStringProperty(argExceptionStr);
+		message = new SimpleStringProperty(argMessage);
+		location = new SimpleStringProperty(argLine);
 		monthCountMap.set(new HashMap<String, MonthCountProperty>());
 		monthCountMap.get().put(argDateStr, new MonthCountProperty(1));
 		totalMonthCount++;
@@ -68,7 +68,7 @@ public class StackTraceProperty {
 	 * @return
 	 */
 	public StringProperty exceptionProperty() {
-		return expProperty;
+		return exceptionStr;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class StackTraceProperty {
 	 * @return
 	 */
 	public StringProperty messageProperty() {
-		return msgProperty;
+		return message;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class StackTraceProperty {
 	 * @return
 	 */
 	public StringProperty locationProperty() {
-		return locationProperty;
+		return location;
 	}
 
 	/**
