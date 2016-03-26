@@ -1,4 +1,4 @@
-## Stack Trace Summary Tool
+### Summary Stack Trace Tool
 
 ## Overview
 This tool reads the stackTrace file output by log4j, to summarize the following information
