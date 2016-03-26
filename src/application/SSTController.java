@@ -1,8 +1,6 @@
 package application;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,7 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-
+import jp.ojt.sst.file.ResultCSVFile;
 import jp.ojt.sst.file.StackTraceFile;
 import jp.ojt.sst.model.StackTraceProperty;
 
@@ -33,12 +31,15 @@ public class SSTController implements Initializable {
 	@FXML
 	private Button buttonExecute;
 	@FXML
+	private Button buttonSaveCSV;
+	@FXML
 	private TableView<StackTraceProperty> resultTableView;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		BooleanBinding bb = filePathField.textProperty().isEmpty().or(searchWordField.textProperty().isEmpty());
 		buttonExecute.disableProperty().bind(bb);
+		buttonSaveCSV.disableProperty().bind(bb);
 	}
 
 	@FXML
@@ -55,12 +56,9 @@ public class SSTController implements Initializable {
 
 	@FXML
 	protected void onExecute(ActionEvent event) {
-
 		StackTraceFile stFile = new StackTraceFile(filePathField.getText(), searchWordField.getText());
 		ObservableList<StackTraceProperty> dataList = stFile.read();
-
 		createResultTableView(stFile.getMonthList());
-		// add data in view
 		resultTableView.getItems().addAll(dataList);	
 	}
 	
@@ -72,8 +70,9 @@ public class SSTController implements Initializable {
 		File saveFile = fc.showSaveDialog(null);
 		
 		if(saveFile != null) {
-			// TODO
-			//saveCSV(saveFile);
+			StackTraceFile stFile = new StackTraceFile(filePathField.getText(), searchWordField.getText());
+			ResultCSVFile csv = new ResultCSVFile();
+			csv.save(saveFile.getAbsolutePath(), stFile);
 		}
 	}
 
@@ -114,17 +113,5 @@ public class SSTController implements Initializable {
 		TableColumn<StackTraceProperty, Number> totalCol = new TableColumn<>("TOTAL");
 		totalCol.setCellValueFactory(new PropertyValueFactory<>("total"));
 		resultTableView.getColumns().add(totalCol);
-	}
-	
-	/**
-	 * TODOs
-	 * @param csvFile
-	 */
-	private void saveCSV(File csvFile) {
-		try {
-			FileWriter fw = new FileWriter(csvFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
