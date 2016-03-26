@@ -16,24 +16,17 @@
             <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="70.0" prefHeight="30.0" prefWidth="100.0" text="Search word:" />
             <TextField fx:id="searchWordField" layoutX="120.0" layoutY="70.0" prefHeight="30.0" prefWidth="150.0" />
             <Button layoutX="470.0" layoutY="20.0" mnemonicParsing="false" onAction="#onReference" prefHeight="30.0" text="Reference" />
-            <Button fx:id="buttonExecute" layoutX="120.0" layoutY="130.0" mnemonicParsing="false" onAction="#onExecute" prefHeight="30.0" prefWidth="120.0" text="Execute">
+            <Button fx:id="buttonExecute" layoutX="80.0" layoutY="130.0" mnemonicParsing="false" onAction="#onExecute" prefHeight="30.0" prefWidth="120.0" text="Execute">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <Button layoutX="360.0" layoutY="130.0" mnemonicParsing="false" onAction="#onExit" prefHeight="30.0" prefWidth="120.0" text="Exit">
-=======
-=======
->>>>>>> develop
             <Button fx:id="buttonSaveCSV" layoutX="260.0" layoutY="130.0" mnemonicParsing="false" onAction="#onSaveCSV" prefHeight="30.0" prefWidth="120.0" text="SaveCSV">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
             <Button layoutX="440.0" layoutY="130.0" mnemonicParsing="false" onAction="#onExit" prefHeight="30.0" prefWidth="120.0" text="Exit">
->>>>>>> develop
                <font>
                   <Font size="18.0" />
                </font>
